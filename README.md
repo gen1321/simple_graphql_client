@@ -36,6 +36,13 @@ def deps do
 end
 ```
 
+## Roadmap
+  * Add support for subscribtion
+  * Better Dialyzer
+  * CI/Test coverege
+  
+ PRs are WELCOME
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/simple_graphql_client](https://hexdocs.pm/simple_graphql_client).
