@@ -1,24 +1,25 @@
 defmodule SimpleGraphqlClient do
-  @moduledoc ~s"""
-    SimpleGraphqlClient is a graphql client, focused on simplicity and ease of use.
+  @moduledoc """
+  SimpleGraphqlClient is a graphql client, focused on simplicity and ease of use.
 
-    ## Usage
-    ```elixir
-    iex>
-    query = "query users($name: String){users(name: $name){name}}"
-    SimpleGraphqlClient.graphql_request(query, %{name: "Boris"})
-    # Will produce
-    {:ok,
+  ## Usage
+  ```elixir
+  iex>
+  query = "query users($name: String){users(name: $name){name}}"
+  SimpleGraphqlClient.graphql_request(query, %{name: "Boris"})
+  # Will produce
+  {:ok,
     %SimpleGraphqlClient.Response{
       body: {:ok, %{"data" => %{"users" => []}}},
       headers: [],
       status_code: 200
-    }}
-    ```
-    If you planning to use it only against single endpoint i suggest you to config it in config.exs
-    ```elixir
-      config :simple_graphql_client, url: "http://example.com/graphql"
-    ```
+    }
+  }
+  ```
+  If you planning to use it only against single endpoint i suggest you to config it in config.exs
+  ```elixir
+  config :simple_graphql_client, url: "http://example.com/graphql"
+  ```
   """
   import SimpleGraphqlClient.HttpClient
   import SimpleGraphqlClient.Parser
