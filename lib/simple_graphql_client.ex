@@ -1,18 +1,13 @@
 defmodule SimpleGraphqlClient do
-  @moduledoc """
-  Documentation for SimpleGraphqlClient.
-  """
+  import SimpleGraphqlClient.HttpClient
+  import SimpleGraphqlClient.Parser
+  alias SimpleGraphqlClient.Response
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> SimpleGraphqlClient.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  @spec graphql_request(binary, list | nil, map) ::
+          {:ok, Response.t()} | {:error, Response.t() | any}
+  def graphql_request(query, variables \\ nil, opts \\ %{}) do
+    query
+    |> send_request(variables, opts)
+    |> parse_response
   end
 end
