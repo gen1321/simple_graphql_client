@@ -5,7 +5,7 @@ defmodule SimpleGraphqlClient do
     ## Usage
     ```elixir
     iex>
-    query = "query users($name: String){users(name: $name){name}}
+    query = "query users($name: String){users(name: $name){name}}"
     SimpleGraphqlClient.graphql_request(query, %{name: "Boris"})
     # Will produce
     {:ok,
