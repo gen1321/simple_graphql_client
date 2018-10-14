@@ -6,7 +6,7 @@ defmodule SimpleGraphqlClient.MixProject do
   def project do
     [
       app: :simple_graphql_client,
-      decription: "Elixir graphql client",
+      description: "Elixir graphql client",
       start_permanent: Mix.env() == :prod,
       version: @version,
       elixir: "~> 1.7",
@@ -42,7 +42,7 @@ defmodule SimpleGraphqlClient.MixProject do
         "lib",
         "mix.exs",
         "README.md",
-        "LICENSE.md"
+        "LICENSE"
       ],
       links: %{"github" => @github_url},
       maintainers: ["Boris Beginin <gen3212@gmail.com>"],
@@ -54,7 +54,7 @@ defmodule SimpleGraphqlClient.MixProject do
     [
       source_ref: "v#{@version}",
       main: "SimpleGraphqlClient",
-      extras: ["README.md"]
+      extras: ["README.md", "CHANGELOG.md"]
     ]
   end
 end
