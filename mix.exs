@@ -1,12 +1,18 @@
 defmodule SimpleGraphqlClient.MixProject do
   use Mix.Project
+  @version "0.1.0"
+  @github_url "https://github.com/gen1321/simple_graphql_client"
 
   def project do
     [
       app: :simple_graphql_client,
-      version: "0.1.0",
-      elixir: "~> 1.7",
+      decription: "Elixir graphql client",
       start_permanent: Mix.env() == :prod,
+      version: @version,
+      elixir: "~> 1.7",
+      package: package(),
+      docs: docs(),
+      source_url: @github_url,
       deps: deps()
     ]
   end
@@ -25,9 +31,30 @@ defmodule SimpleGraphqlClient.MixProject do
       {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:mock, "~> 0.3.0", only: :test},
-      {:poison, "~> 3.1"}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      {:poison, "~> 3.1"},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
+    ]
+  end
+
+  defp package do
+    [
+      files: [
+        "lib",
+        "mix.exs",
+        "README.md",
+        "LICENSE.md"
+      ],
+      links: %{"github" => @github_url},
+      maintainers: ["Boris Beginin <gen3212@gmail.com>"],
+      licenses: ["MIT"]
+    ]
+  end
+
+  defp docs do
+    [
+      source_ref: "v#{@version}",
+      main: "Simple Graphql Client",
+      extras: ["README.md"]
     ]
   end
 end

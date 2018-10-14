@@ -1,4 +1,8 @@
 defmodule SimpleGraphqlClient.HttpClient do
+  @moduledoc """
+    This module handles all http stuff
+  """
+
   def send_request(query, variables \\ nil, opts \\ %{}) do
     HTTPoison.post(api_url(opts), body(query, variables), headers(opts))
   end
@@ -9,7 +13,7 @@ defmodule SimpleGraphqlClient.HttpClient do
     |> Poison.encode!()
   end
 
-  defp create_body(query, nil = variables) do
+  defp create_body(query, nil) do
     %{query: query}
   end
 
@@ -32,7 +36,7 @@ defmodule SimpleGraphqlClient.HttpClient do
       Map.get(opts, :headers) || Application.get_env(:simple_graphql_client, :default_headers) ||
         []
 
-    graphql_headers ++ custom_headers
+    graphql_headers() ++ custom_headers
   end
 
   defp graphql_headers do

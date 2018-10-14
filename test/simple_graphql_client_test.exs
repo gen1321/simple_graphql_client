@@ -40,13 +40,23 @@ defmodule SimpleGraphqlClientTest do
         post: fn _api_url, _body, _headers ->
           @mock
         end do
-        SimpleGraphqlClient.graphql_request(@query, %{name: "Boris"}, %{headers: [token: "1234"]})
+        resp =
+          SimpleGraphqlClient.graphql_request(@query, %{name: "Boris"}, %{
+            headers: [token: "1234"]
+          })
 
         body =
           "{\"variables\":{\"name\":\"Boris\"},\"query\":\"  query users($name: String){\\n    users(name: $name){\\n      name\\n    }\\n  }\\n\"}"
 
         headers = [{"Content-Type", "application/json"}, token: "1234"]
         assert_called(HTTPoison.post(url, body, headers))
+
+        assert {:ok,
+                %SimpleGraphqlClient.Response{
+                  body: {:ok, %{"data" => %{"users" => []}}},
+                  headers: [],
+                  status_code: 200
+                }} == resp
       end
     end
 
@@ -55,13 +65,20 @@ defmodule SimpleGraphqlClientTest do
         post: fn _api_url, _body, _headers ->
           @mock
         end do
-        SimpleGraphqlClient.graphql_request(@query)
+        resp = SimpleGraphqlClient.graphql_request(@query)
 
         body =
           "{\"query\":\"  query users($name: String){\\n    users(name: $name){\\n      name\\n    }\\n  }\\n\"}"
 
         headers = [{"Content-Type", "application/json"}]
         assert_called(HTTPoison.post(url, body, headers))
+
+        assert {:ok,
+                %SimpleGraphqlClient.Response{
+                  body: {:ok, %{"data" => %{"users" => []}}},
+                  headers: [],
+                  status_code: 200
+                }} == resp
       end
     end
 

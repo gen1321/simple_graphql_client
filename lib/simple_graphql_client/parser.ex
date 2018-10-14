@@ -1,4 +1,8 @@
 defmodule SimpleGraphqlClient.Parser do
+  @moduledoc """
+    Utilities to map response to internal struct or pass them throgh in some cases
+  """
+
   alias SimpleGraphqlClient.Response
 
   def parse_response({:ok, %{status_code: 200} = resp}) do
