@@ -53,7 +53,7 @@ defmodule SimpleGraphqlClient.MixProject do
   defp docs do
     [
       source_ref: "v#{@version}",
-      main: "Simple Graphql Client",
+      main: "SimpleGraphqlClient",
       extras: ["README.md"]
     ]
   end
