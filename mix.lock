@@ -1,4 +1,5 @@
 %{
+  "absinthe_websocket": {:hex, :absinthe_websocket, "0.2.0", "f6e649b9007c5a3c929b771a835078210c2e76bc01a23e404a4987ac606fa47b", [:mix], [{:poison, "~> 2.0 or ~> 3.0", [hex: :poison, repo: "hexpm", optional: false]}, {:websockex, "~> 0.4", [hex: :websockex, repo: "hexpm", optional: false]}], "hexpm"},
   "bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [:mix], [], "hexpm"},
   "certifi": {:hex, :certifi, "2.4.2", "75424ff0f3baaccfd34b1214184b6ef616d89e420b258bb0a5ea7d7bc628f7f0", [:rebar3], [{:parse_trans, "~>3.3", [hex: :parse_trans, repo: "hexpm", optional: false]}], "hexpm"},
   "credo": {:hex, :credo, "0.10.2", "03ad3a1eff79a16664ed42fc2975b5e5d0ce243d69318060c626c34720a49512", [:mix], [{:bunt, "~> 0.2.0", [hex: :bunt, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm"},
@@ -20,4 +21,5 @@
   "poison": {:hex, :poison, "3.1.0", "d9eb636610e096f86f25d9a46f35a9facac35609a7591b3be3326e99a0484665", [:mix], [], "hexpm"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.4", "f0eafff810d2041e93f915ef59899c923f4568f4585904d010387ed74988e77b", [:make, :mix, :rebar3], [], "hexpm"},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.4.1", "d869e4c68901dd9531385bb0c8c40444ebf624e60b6962d95952775cac5e90cd", [:rebar3], [], "hexpm"},
+  "websockex": {:hex, :websockex, "0.4.1", "d7b7191ec3d5dd136683b60114405a5a130a175faade773a07cb52dbd98f9442", [:mix], [], "hexpm"},
 }

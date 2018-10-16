@@ -1,4 +1,9 @@
 defmodule SimpleGraphqlClient do
+  import SimpleGraphqlClient.HttpClient
+  import SimpleGraphqlClient.Parser
+  import SimpleGraphqlClient.Subscriber
+  alias SimpleGraphqlClient.Response
+
   @moduledoc """
   SimpleGraphqlClient is a graphql client, focused on simplicity and ease of use.
 
@@ -21,9 +26,6 @@ defmodule SimpleGraphqlClient do
   config :simple_graphql_client, url: "http://example.com/graphql"
   ```
   """
-  import SimpleGraphqlClient.HttpClient
-  import SimpleGraphqlClient.Parser
-  alias SimpleGraphqlClient.Response
 
   @doc """
    Execute request to graphql endpoint
@@ -42,5 +44,10 @@ defmodule SimpleGraphqlClient do
     query
     |> send_request(variables, opts)
     |> parse_response
+  end
+
+  def subscribe(query, variables \\ nil, callback \\ &IO.inspect/1, opts \\ %{}) do
+    query
+    |> sub(variables, callback, opts)
   end
 end
