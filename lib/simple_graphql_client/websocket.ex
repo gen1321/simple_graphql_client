@@ -12,15 +12,10 @@ defmodule SimpleGraphqlClient.WebSocket do
     name = Keyword.get(opts, :name)
     url = Keyword.get(args, :url)
     token = Keyword.get(args, :token)
-    full_url = if token do
-      query = URI.encode_query(%{"token" => token})
-      "#{url}?#{query}"
-    else
-      url
-    end
+    
     subscription_server = Keyword.get(args, :subscription_server)
     state = %{subscriptions: %{}, queries: %{}, msg_ref: 0, heartbeat_timer: nil, socket: name, subscription_server: subscription_server}
-    WebSockex.start_link(full_url, __MODULE__, state, handle_initial_conn_failure: true, async: true, name: __MODULE__)
+    WebSockex.start_link(url, __MODULE__, state, handle_initial_conn_failure: true, async: true, name: __MODULE__)
   end
 
   def query(socket, pid, ref, query, variables \\ []) do

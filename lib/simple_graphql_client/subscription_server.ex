@@ -13,7 +13,6 @@ defmodule SimpleGraphqlClient.SubscriptionServer do
       subscriptions: %{},
     }
 
-    IO.inspect("aset")
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
@@ -27,7 +26,7 @@ defmodule SimpleGraphqlClient.SubscriptionServer do
   end
 
   def handle_cast({:subscribe, subscription_name, callback, query, variables}, %{socket: socket, subscriptions: subscriptions} = state) do
-    SimpleGraphqlClient.WebSocket.subscribe(socket, self(), subscription_name, query, variables)
+    SimpleGraphqlClient.WebSocket.subscribe(socket, subscription_name, query, variables)
     callbacks = Map.get(subscriptions, subscription_name, [])
     subscriptions = Map.put(subscriptions, subscription_name, [callback | callbacks])
     state = Map.put(state, :subscriptions, subscriptions)

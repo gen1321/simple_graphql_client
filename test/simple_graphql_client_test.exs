@@ -15,11 +15,19 @@ defmodule SimpleGraphqlClientTest do
   """
 
   @sub_query """
-  subscription name {
-    quizFinish{
-      id
-      }
+  subscription testsub {
+    userAdded{
+      email
     }
+  }
+  """
+
+  @mutation_query """
+  mutation testmut {
+    createUser(email: "testuser@example.com", name: "testname"){
+      email
+    }
+  }
   """
 
   @mock {:ok,
@@ -103,16 +111,19 @@ defmodule SimpleGraphqlClientTest do
 
   describe "subscribe/4" do
     setup do
-      url = "ws://localhost:4000/socket"
+      ws_url = "ws://localhost:4000/socket/websocket"
+      url = "http://localhost:4000/api"
       Application.put_env(:simple_graphql_client, :ws_url, url )
-      Application.put_env(:simple_graphql_client, :default_headers, [{"Authorization", "BearereyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJicmFuZF9jaGFsbGVuZ2UiLCJleHAiOjE1NDIxMzg2MTIsImlhdCI6MTUzOTcxOTQxMiwiaXNzIjoiYnJhbmRfY2hhbGxlbmdlIiwianRpIjoiODg5ZGQwOTgtMDg5Ni00OTE0LWJmYzktMGFhYWI4ODRiY2UyIiwibmJmIjoxNTM5NzE5NDExLCJzdWIiOiIyIiwidHlwIjoiYWNjZXNzIn0.JzdrWQuO_UFlCJ52RtmpNgENQR0DivaicpYrb70P66NFdGBhD0nyfKZaSAY9KO4kGP1IC_idf2D7U4CbkDknrg"}])
+      Application.put_env(:simple_graphql_client, :url, url )
 
-      {:ok, %{url: url}} 
+      {:ok, %{ws_url: ws_url, url: url}} 
     end
 
-    test "sub", %{url: url} do
-      IO.inspect SimpleGraphqlClient.Supervisor.start_link(url: url)
-      IO.inspect SimpleGraphqlClient.subscribe(@sub_query, %{})
+    test "sub", %{ws_url: ws_url} do
+      SimpleGraphqlClient.Supervisor.start_link(url: ws_url)
+      # SimpleGraphqlClient.subscribe(@sub_query, %{})
+      SimpleGraphqlClient.graphql_request(@mutation_query)
+
     end
   end
 end
