@@ -247,7 +247,6 @@ defmodule SimpleGraphqlClient.WebSocket do
         %{"event" => "subscription:data", "payload" => payload, "topic" => subscription_id},
         %{subscriptions: subscriptions} = state
       ) do
-    # Logger.info "#{__MODULE__} - Subscription: #{inspect msg}"
     {pid, subscription_name} = Map.get(subscriptions, subscription_id)
 
     data = payload["result"]["data"]

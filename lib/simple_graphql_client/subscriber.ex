@@ -2,10 +2,10 @@ defmodule SimpleGraphqlClient.Subscriber do
   alias SimpleGraphqlClient.SubscriptionServer
   import SimpleGraphqlClient.Config
 
-  def sub(query, variables, callback, opts) do
+  def absinthe_sub(query, variables, callback_or_dest, opts) do
     SubscriptionServer.subscribe(
       get_subscription_name(query),
-      callback,
+      callback_or_dest,
       query,
       variables
     )

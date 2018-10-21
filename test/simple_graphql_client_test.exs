@@ -22,7 +22,7 @@ defmodule SimpleGraphqlClientTest do
   }
   """
 
-  @mutation_query = """
+  @mutation_query """
   mutation testmut {
     createUser(email: "testuser@example.com", name: "testname"){
       email
@@ -117,11 +117,25 @@ defmodule SimpleGraphqlClientTest do
       {:ok, %{ws_url: ws_url, url: url}}
     end
 
+    test "subscribe with dest", %{ws_url: ws_url} do
+      SimpleGraphqlClient.Supervisor.start_link(url: ws_url)
+      :timer.sleep(50)
+      SimpleGraphqlClient.absinthe_subscribe(@sub_query, %{}, self())
+      :timer.sleep(50)
+      SimpleGraphqlClient.graphql_request(@mutation_query)
+      :timer.sleep(50)
+      assert_received %{"userAdded" => %{"email" => "testuser@example.com"}}
+    end
+
     test "subscribe with callback", %{ws_url: ws_url} do
       SimpleGraphqlClient.Supervisor.start_link(url: ws_url)
-      SimpleGraphqlClient.subscribe(sub_query, %{}, self())
-      SimpleGraphqlClient.graphql_request(mutation_query)
-      :timer.sleep(1000)
+      :timer.sleep(50)
+      SimpleGraphqlClient.absinthe_subscribe(@sub_query, %{}, fn data ->
+        assert data == %{"userAdded" => %{"email" => "testuser@example.com"}}
+      end)
+      :timer.sleep(50)
+      SimpleGraphqlClient.graphql_request(@mutation_query)
+      :timer.sleep(50)
     end
   end
 end

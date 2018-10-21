@@ -46,8 +46,8 @@ defmodule SimpleGraphqlClient do
     |> parse_response
   end
 
-  def subscribe(query, variables \\ nil, callback \\ &IO.inspect/1, opts \\ %{}) do
+  def absinthe_subscribe(query, variables, callback_or_dest, opts \\ %{}) do
     query
-    |> sub(variables, callback, opts)
+    |> absinthe_sub(variables, callback_or_dest, opts)
   end
 end

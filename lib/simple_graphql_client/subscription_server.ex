@@ -41,6 +41,7 @@ defmodule SimpleGraphqlClient.SubscriptionServer do
   end
 
   defp handle_callback_or_dest(callback_or_dest, response) do
+    IO.inspect("tes")
     if is_function(callback_or_dest) do
       callback_or_dest.(response)
     else
