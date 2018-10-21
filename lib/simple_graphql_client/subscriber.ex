@@ -3,13 +3,12 @@ defmodule SimpleGraphqlClient.Subscriber do
   import SimpleGraphqlClient.Config
 
   def sub(query, variables, callback, opts) do
-    q = SubscriptionServer.subscribe(
+    SubscriptionServer.subscribe(
       get_subscription_name(query),
       callback,
       query,
       variables
     )
-    q
   end
 
   def get_subscription_name(query) do

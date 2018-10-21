@@ -22,7 +22,7 @@ defmodule SimpleGraphqlClientTest do
   }
   """
 
-  @mutation_query """
+  @mutation_query = """
   mutation testmut {
     createUser(email: "testuser@example.com", name: "testname"){
       email
@@ -50,7 +50,6 @@ defmodule SimpleGraphqlClientTest do
 
       {:ok, %{url: url}}
     end
-
 
     test "creates correct request with all parameters passs", %{url: url} do
       with_mock HTTPoison,
@@ -106,24 +105,23 @@ defmodule SimpleGraphqlClientTest do
                    "Please specify url either in config file or pass it in opts",
                    fn -> SimpleGraphqlClient.graphql_request(@query) end
     end
-
   end
 
   describe "subscribe/4" do
     setup do
       ws_url = "ws://localhost:4000/socket/websocket"
       url = "http://localhost:4000/api"
-      Application.put_env(:simple_graphql_client, :ws_url, url )
-      Application.put_env(:simple_graphql_client, :url, url )
+      Application.put_env(:simple_graphql_client, :ws_url, url)
+      Application.put_env(:simple_graphql_client, :url, url)
 
-      {:ok, %{ws_url: ws_url, url: url}} 
+      {:ok, %{ws_url: ws_url, url: url}}
     end
 
-    test "sub", %{ws_url: ws_url} do
+    test "subscribe with callback", %{ws_url: ws_url} do
       SimpleGraphqlClient.Supervisor.start_link(url: ws_url)
-      # SimpleGraphqlClient.subscribe(@sub_query, %{})
-      SimpleGraphqlClient.graphql_request(@mutation_query)
-
+      SimpleGraphqlClient.subscribe(sub_query, %{}, self())
+      SimpleGraphqlClient.graphql_request(mutation_query)
+      :timer.sleep(1000)
     end
   end
 end
