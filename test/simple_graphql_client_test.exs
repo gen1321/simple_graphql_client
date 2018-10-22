@@ -14,6 +14,14 @@ defmodule SimpleGraphqlClientTest do
     }
   """
 
+  @mutation_query """
+  mutation testmut {
+    createUser(email: "testuser@example.com", name: "testname"){
+      email
+    }
+  }
+  """
+
   @mock {:ok,
          %{
            body: """
@@ -27,23 +35,21 @@ defmodule SimpleGraphqlClientTest do
            headers: []
          }}
 
-  setup do
-    url = "www.example.com/api"
-    Application.put_env(:simple_graphql_client, :url, url)
-
-    {:ok, %{url: url}}
-  end
-
   describe "graphql_request/3" do
+    setup do
+      {:ok, %{url: "www.example.com/api"}}
+    end
+
     test "creates correct request with all parameters passs", %{url: url} do
       with_mock HTTPoison,
         post: fn _api_url, _body, _headers ->
           @mock
         end do
         resp =
-          SimpleGraphqlClient.graphql_request(@query, %{name: "Boris"}, %{
-            headers: [token: "1234"]
-          })
+          SimpleGraphqlClient.graphql_request(@query, %{name: "Boris"},
+            headers: [token: "1234"],
+            url: url
+          )
 
         body =
           "{\"variables\":{\"name\":\"Boris\"},\"query\":\"  query users($name: String){\\n    users(name: $name){\\n      name\\n    }\\n  }\\n\"}"
@@ -65,7 +71,7 @@ defmodule SimpleGraphqlClientTest do
         post: fn _api_url, _body, _headers ->
           @mock
         end do
-        resp = SimpleGraphqlClient.graphql_request(@query)
+        resp = SimpleGraphqlClient.graphql_request(@query, nil, url: url)
 
         body =
           "{\"query\":\"  query users($name: String){\\n    users(name: $name){\\n      name\\n    }\\n  }\\n\"}"
@@ -83,10 +89,8 @@ defmodule SimpleGraphqlClientTest do
     end
 
     test "raise if no url" do
-      Application.put_env(:simple_graphql_client, :url, nil)
-
       assert_raise RuntimeError,
-                   "Please specify url either in config file or pass it in opts",
+                   "Please pass url it in opts",
                    fn -> SimpleGraphqlClient.graphql_request(@query) end
     end
   end
