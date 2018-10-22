@@ -8,6 +8,7 @@ defmodule SimpleGraphqlClient do
   SimpleGraphqlClient is a graphql client, focused on simplicity and ease of use.
 
   ## Usage
+  ### Query/Mutation example
   ```elixir
   iex>
   query = "query users($name: String){users(name: $name){name}}"
@@ -21,17 +22,31 @@ defmodule SimpleGraphqlClient do
     }
   }
   ```
-  If you planning to use it only against single endpoint i suggest you to config it in config.exs
-  ```elixir
-  config :simple_graphql_client, url: "http://example.com/graphql"
+
+  ### Query/Mutation subscription
+  ```elixir 
+  sub_query = "
+  subscription testsub {
+    userAdded{
+      email
+    }
+  }
+  "
+  SimpleGraphqlClient.absinthe_subscribe(sub_query, %{}, &IO.inputs/1)
+
+  # Will produce 
+  %{"userAdded" => %{"email" => "testuser@example.com"}}
   ```
+
+  ## More examples
+  You can find more examples in `test_app/test/graphql` folder
   """
 
   @doc """
    Execute request to graphql endpoint
    * query - any valid graphql query
    * variables -  pass a map with variables to pass alongside with query
-   * opts - supports overiding url with :url key and passing list of additional headers e.g for authorization
+   * opts - url and  list of additional headers e.g for authorization
 
   ## Usage
   ```elixir
@@ -46,6 +61,18 @@ defmodule SimpleGraphqlClient do
     |> parse_response
   end
 
+  @doc """
+    Subcribe to absinthe subscription.
+    * query - any vailidd graphql query
+    * variables -  pass a map with variables to pass alongside with query
+    * callback_or_dest - pass here a callback function or destination to receive message with fulfillment data
+    * opts - url and  list of additional headers e.g for authorization
+
+  ## Usage
+  ``` 
+  SimpleGraphqlClient.absinthe_subscribe(sub_query, %{}, &IO.inputs/1) # Or you can pid/name as last argumen to receive message with fulfillment data
+  ```
+  """
   def absinthe_subscribe(query, variables, callback_or_dest, opts \\ []) do
     query
     |> absinthe_sub(variables, callback_or_dest, opts)

@@ -1,4 +1,7 @@
 defmodule SimpleGraphqlClient.SubscriptionServer do
+  @moduledoc "
+    Genserver that handles all subscription related logic
+  "
   use GenServer
   require Logger
   alias SimpleGraphqlClient.WebSocket

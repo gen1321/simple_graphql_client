@@ -1,4 +1,7 @@
 defmodule SimpleGraphqlClient.Supervisor do
+  @moduledoc """
+    Supervisor for WS related genservers
+  """
   use Supervisor
   alias SimpleGraphqlClient.SubscriptionServer
   alias SimpleGraphqlClient.WebSocket

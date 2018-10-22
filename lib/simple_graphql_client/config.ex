@@ -1,4 +1,7 @@
 defmodule SimpleGraphqlClient.Config do
+  @moduledoc """
+    Configuration for appliaction
+  """
   @default_headers [{"Content-Type", "application/json"}]
   def api_url(opts) do
     required_url(opts, :url)
