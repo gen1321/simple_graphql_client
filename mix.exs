@@ -1,6 +1,6 @@
 defmodule SimpleGraphqlClient.MixProject do
   use Mix.Project
-  @version "0.2.0"
+  @version "0.2.1"
   @github_url "https://github.com/gen1321/simple_graphql_client"
 
   def project do
@@ -28,8 +28,8 @@ defmodule SimpleGraphqlClient.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.3.1"},
-      {:absinthe_websocket, "~> 0.2.0"},
       {:poison, "~> 3.1"},
+      {:websockex, "~> 0.4.0"},
       {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:elixir_uuid, "~> 1.2"},

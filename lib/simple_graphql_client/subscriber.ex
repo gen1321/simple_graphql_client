@@ -3,7 +3,6 @@ defmodule SimpleGraphqlClient.Subscriber do
     Handles data transformation for genserver call.
   """
   alias SimpleGraphqlClient.SubscriptionServer
-  import SimpleGraphqlClient.Config
 
   @doc """
    Handles absinthe subscription with help of Subscritpion genserver.
