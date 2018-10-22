@@ -7,10 +7,6 @@ defmodule SimpleGraphqlClient.Supervisor do
     Supervisor.start_link(__MODULE__, args, name: :simple_graphql_client_supervisor)
   end
 
-  # name: OrgmanicQLApi.Websocket.Supervisor
-  # name: OrgmanicQLApi.Websocket.QueryServer
-  # name: OrgmanicQLApi.Websocket.SubscriptionServer
-
   def init(args) do
     subscription_server_name = SubscriptionServer
     socket_name = WebSocket
@@ -23,8 +19,6 @@ defmodule SimpleGraphqlClient.Supervisor do
       ])
     ]
 
-    # restart everything on failures
-    # It'd be nice if the QueryServer & SubscriptionServer could recover...
     Supervisor.init(children, strategy: :one_for_all)
   end
 end
