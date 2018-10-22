@@ -32,6 +32,7 @@ defmodule SimpleGraphqlClient.MixProject do
       {:poison, "~> 3.1"},
       {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
+      {:elixir_uuid, "~> 1.2"},
       {:mock, "~> 0.3.0", only: :test},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]

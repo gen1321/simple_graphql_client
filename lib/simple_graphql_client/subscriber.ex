@@ -14,6 +14,11 @@ defmodule SimpleGraphqlClient.Subscriber do
   def get_subscription_name(query) do
     ~r/(?<=subscription\s).*(?=\s\{)/
     |> Regex.run(query)
-    |> hd
+    |> case do
+      [hd] ->
+        hd
+      _ ->
+        UUID.uuid4()
+    end
   end
 end

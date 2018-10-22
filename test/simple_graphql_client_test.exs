@@ -46,7 +46,10 @@ defmodule SimpleGraphqlClientTest do
           @mock
         end do
         resp =
-          SimpleGraphqlClient.graphql_request(@query, %{name: "Boris"}, headers: [token: "1234"], url: url)
+          SimpleGraphqlClient.graphql_request(@query, %{name: "Boris"},
+            headers: [token: "1234"],
+            url: url
+          )
 
         body =
           "{\"variables\":{\"name\":\"Boris\"},\"query\":\"  query users($name: String){\\n    users(name: $name){\\n      name\\n    }\\n  }\\n\"}"
@@ -68,7 +71,7 @@ defmodule SimpleGraphqlClientTest do
         post: fn _api_url, _body, _headers ->
           @mock
         end do
-        resp = SimpleGraphqlClient.graphql_request(@query, nil, [url: url])
+        resp = SimpleGraphqlClient.graphql_request(@query, nil, url: url)
 
         body =
           "{\"query\":\"  query users($name: String){\\n    users(name: $name){\\n      name\\n    }\\n  }\\n\"}"
@@ -87,7 +90,7 @@ defmodule SimpleGraphqlClientTest do
 
     test "raise if no url" do
       assert_raise RuntimeError,
-        "Please pass url it in opts",
+                   "Please pass url it in opts",
                    fn -> SimpleGraphqlClient.graphql_request(@query) end
     end
   end
