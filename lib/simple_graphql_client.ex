@@ -23,7 +23,7 @@ defmodule SimpleGraphqlClient do
   }
   ```
 
-  ### Query/Mutation subscription
+  ### Subscription example
   ```elixir 
   sub_query = "
   subscription testsub {

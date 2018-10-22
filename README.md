@@ -22,7 +22,7 @@ SimpleGraphqlClient.graphql_request(query, %{name: "Boris"})
 }
 ```
 
-### Query/Mutation subscription
+### Subscription example
 ```elixir 
 sub_query = "
   subscription testsub {
