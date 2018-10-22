@@ -56,7 +56,7 @@ defmodule SimpleGraphqlClient do
     SimpleGraphqlClient.graphql_request(query, %{name: "Boris"}, %{url: "http://example.com/graphql", headers: token: "1234"})
   ```
   """
-  @spec graphql_request(binary, map | nil, map) ::
+  @spec graphql_request(binary, map | nil, keyword) ::
           {:ok, Response.t()} | {:error, Response.t() | any}
   def graphql_request(query, variables \\ nil, opts \\ []) do
     query
@@ -76,6 +76,8 @@ defmodule SimpleGraphqlClient do
   SimpleGraphqlClient.absinthe_subscribe(sub_query, %{}, &IO.inputs/1) # Or you can pid/name as last argumen to receive message with fulfillment data
   ```
   """
+
+  @spec absinthe_subscribe(binary, map | nil, keyword) :: :ok | {:error, any}
   def absinthe_subscribe(query, variables, callback_or_dest, opts \\ []) do
     query
     |> absinthe_sub(variables, callback_or_dest, opts)

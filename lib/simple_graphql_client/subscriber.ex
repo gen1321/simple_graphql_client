@@ -23,6 +23,7 @@ defmodule SimpleGraphqlClient.Subscriber do
     |> case do
       [hd] ->
         hd
+
       _ ->
         UUID.uuid4()
     end
