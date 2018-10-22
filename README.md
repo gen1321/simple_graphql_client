@@ -40,6 +40,9 @@ SimpleGraphqlClient.absinthe_subscribe(sub_query, %{}, &IO.inputs/1)
 ## More examples
 You can find more examples in `test_app/test/graphql` folder
 
+## Configuration
+For configuration i suggest to write your own wrappers of &graphql_request/3 or any subscribe function. If you want to pass Authorization parametrs to WS connection, please encode them into url.
+
 ## Installation
 ```elixir
 def deps do
