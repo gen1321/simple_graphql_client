@@ -5,6 +5,7 @@
 * ADD SUPPORT FOR ABSINTHE SUBSCRIPTIONS yaiks!
 * opts is now a keyword list
 * add test app for proper integration testing
+* support down to elixir 1.3
 
 ## v0.1.0
 

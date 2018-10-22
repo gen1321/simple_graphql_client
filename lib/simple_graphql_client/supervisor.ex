@@ -11,8 +11,6 @@ defmodule SimpleGraphqlClient.Supervisor do
   end
 
   def init(args) do
-    subscription_server_name = SubscriptionServer
-    socket_name = WebSocket
     ws_url = Keyword.get(args, :ws_url)
 
     children = [

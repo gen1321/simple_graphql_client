@@ -9,7 +9,7 @@ defmodule SimpleGraphqlClient.MixProject do
       description: "Elixir graphql client",
       start_permanent: Mix.env() == :prod,
       version: @version,
-      elixir: "~> 1.7",
+      elixir: "~> 1.3",
       package: package(),
       docs: docs(),
       source_url: @github_url,

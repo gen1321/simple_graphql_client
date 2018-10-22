@@ -14,14 +14,6 @@ defmodule SimpleGraphqlClientTest do
     }
   """
 
-  @mutation_query """
-  mutation testmut {
-    createUser(email: "testuser@example.com", name: "testname"){
-      email
-    }
-  }
-  """
-
   @mock {:ok,
          %{
            body: """
