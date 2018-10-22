@@ -5,7 +5,7 @@ defmodule SimpleGraphqlClient.HttpClient do
     This module handles all http stuff
   """
 
-  def send_request(query, variables \\ nil, opts \\ %{}) do
+  def send_request(query, variables \\ nil, opts \\ []) do
     HTTPoison.post(api_url(opts), body(query, variables), headers(opts))
   end
 
