@@ -6,8 +6,9 @@ defmodule SimpleGraphqlClient.SubscriptionServer do
   def start_link do
     state = %{
       socket: WebSocket,
-      subscriptions: %{},
+      subscriptions: %{}
     }
+
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
@@ -16,10 +17,16 @@ defmodule SimpleGraphqlClient.SubscriptionServer do
   end
 
   def subscribe(subscription_name, callback_or_dest, query, variables \\ []) do
-    GenServer.cast(__MODULE__, {:subscribe, subscription_name, callback_or_dest, query, variables})
+    GenServer.cast(
+      __MODULE__,
+      {:subscribe, subscription_name, callback_or_dest, query, variables}
+    )
   end
 
-  def handle_cast({:subscribe, subscription_name, callback_or_dest, query, variables}, %{socket: socket, subscriptions: subscriptions} = state) do
+  def handle_cast(
+        {:subscribe, subscription_name, callback_or_dest, query, variables},
+        %{socket: socket, subscriptions: subscriptions} = state
+      ) do
     WebSocket.subscribe(socket, self(), subscription_name, query, variables)
 
     callbacks = Map.get(subscriptions, subscription_name, [])
@@ -30,18 +37,22 @@ defmodule SimpleGraphqlClient.SubscriptionServer do
   end
 
   # Incoming Notifications (from SimpleGraphqlClient.WebSocket)
-  def handle_cast({:subscription, subscription_name, response}, %{subscriptions: subscriptions} = state) do
-    Map.get(subscriptions, subscription_name, [])
-    |> Enum.each(fn(callback_or_dest) -> handle_callback_or_dest(callback_or_dest, response) end)
+  def handle_cast(
+        {:subscription, subscription_name, response},
+        %{subscriptions: subscriptions} = state
+      ) do
+    subscriptions
+    |> Map.get(subscription_name, [])
+    |> Enum.each(fn callback_or_dest -> handle_callback_or_dest(callback_or_dest, response) end)
+
     {:noreply, state}
   end
 
-  def handle_cast({:joined},  state) do
+  def handle_cast({:joined}, state) do
     {:noreply, state}
   end
 
   defp handle_callback_or_dest(callback_or_dest, response) do
-    IO.inspect("tes")
     if is_function(callback_or_dest) do
       callback_or_dest.(response)
     else

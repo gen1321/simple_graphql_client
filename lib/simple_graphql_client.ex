@@ -40,13 +40,13 @@ defmodule SimpleGraphqlClient do
   """
   @spec graphql_request(binary, map | nil, map) ::
           {:ok, Response.t()} | {:error, Response.t() | any}
-  def graphql_request(query, variables \\ nil, opts \\ %{}) do
+  def graphql_request(query, variables \\ nil, opts \\ []) do
     query
     |> send_request(variables, opts)
     |> parse_response
   end
 
-  def absinthe_subscribe(query, variables, callback_or_dest, opts \\ %{}) do
+  def absinthe_subscribe(query, variables, callback_or_dest, opts \\ []) do
     query
     |> absinthe_sub(variables, callback_or_dest, opts)
   end

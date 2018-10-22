@@ -3,7 +3,7 @@ defmodule SimpleGraphqlClient.Supervisor do
   alias SimpleGraphqlClient.SubscriptionServer
   alias SimpleGraphqlClient.WebSocket
 
-  def start_link(args) do
+  def start_link(args \\ %{}) do
     Supervisor.start_link(__MODULE__, args, name: :simple_graphql_client_supervisor)
   end
 
@@ -14,13 +14,12 @@ defmodule SimpleGraphqlClient.Supervisor do
   def init(args) do
     subscription_server_name = SubscriptionServer
     socket_name = WebSocket
-    url = Keyword.get(args, :url)
-    token = Keyword.get(args, :token)
+    ws_url = Keyword.get(args, :ws_url)
 
     children = [
       worker(SubscriptionServer, []),
       worker(WebSocket, [
-        [url: url],
+        [ws_url: ws_url]
       ])
     ]
 

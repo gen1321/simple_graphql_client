@@ -11,7 +11,7 @@ defmodule SimpleGraphqlClient.WebSocket do
   def start_link(args) do
     name = __MODULE__
 
-    url = Keyword.get(args, :url)
+    ws_url = Keyword.get(args, :ws_url)
 
     state = %{
       subscriptions: %{},
@@ -22,7 +22,7 @@ defmodule SimpleGraphqlClient.WebSocket do
       subscription_server: SubscriptionServer
     }
 
-    WebSockex.start_link(url, __MODULE__, state,
+    WebSockex.start_link(ws_url, __MODULE__, state,
       handle_initial_conn_failure: true,
       async: true,
       name: name
@@ -173,6 +173,7 @@ defmodule SimpleGraphqlClient.WebSocket do
       state
       |> Map.put(:queries, queries)
       |> Map.put(:msg_ref, msg_ref + 1)
+
     {:reply, {:text, msg}, state}
   end
 

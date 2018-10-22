@@ -9,13 +9,10 @@ defmodule SimpleGraphqlClient.Config do
   end
 
   def headers(opts) do
-    @default_headers ++
-      (Map.get(opts, :headers) || Application.get_env(:simple_graphql_client, :default_headers) ||
-         [])
+    @default_headers ++ (Keyword.get(opts, :headers) || [])
   end
 
   defp required_url(opts, key) do
-    Map.get(opts, key) || Application.get_env(:simple_graphql_client, key) ||
-      raise "Please specify #{key} either in config file or pass it in opts"
+    Keyword.get(opts, key) || raise "Please pass #{key} it in opts"
   end
 end
